@@ -41,10 +41,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         String vote = Double.toString(movieList.get(position).getVoteAverage());
         holder.userRating.setText(vote);
 
-        // Load thumbnail with glide
-        /*Glide.with(context).load(movieList.get(position).getPosterPath())
-                .placeholder(R.drawable.placeholder_image).into(holder.thumbnail);
-        */
+       /* // Load thumbnail with glide
+        Glide.with(context).load(movieList.get(position).getPosterPath())
+                .placeholder(R.drawable.placeholder_image).into(holder.thumbnail);*/
+
         RequestOptions options = new RequestOptions().fitCenter().placeholder(R.drawable.loading)
                 .error(R.drawable.error_image);
         Glide.with(context).load(movieList.get(position).getPosterPath()).apply(options).into(holder.thumbnail);

@@ -7,7 +7,6 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -95,9 +94,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         adapter.notifyDataSetChanged();
 
         checkSortOrder();
+
     }
 
     private void loadJSONPopular() {
+        // Execute on background thread
         try {
             if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please obtain API key from themoviedb.org", Toast.LENGTH_LONG).show();
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 public void onFailure(@NonNull Call<MoviesResponse> call, @NonNull Throwable t) {
                     // if call isn't successful
                     //Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void loadJSONTopRated() {
+        // Execute on background thread
         try {
             if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please obtain API key from themoviedb.org", Toast.LENGTH_LONG).show();
@@ -148,10 +150,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 @Override
                 public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                     // if call is successful
-                    List<Movie> movies = null;
-                    if (response.body() != null) {
-                        movies = response.body().getResults();
-                    }
+                    List<Movie> movies = response.body().getResults();
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     // 0 is the index of the first item on the list
                     recyclerView.smoothScrollToPosition(0);

@@ -81,7 +81,8 @@ public class DetailActivity extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle(getString(R.string.movie_details));
+                    /*TODO: change for scrolling effect*/
+                    collapsingToolbarLayout.setTitle(getIntent().getStringExtra("title"));
                     isShown = true;
                 } else if (isShown) {
                     collapsingToolbarLayout.setTitle(" ");
