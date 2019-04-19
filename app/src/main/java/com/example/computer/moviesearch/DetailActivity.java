@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.computer.moviesearch.adapter.TrailerAdapter;
 import com.example.computer.moviesearch.api.Client;
 import com.example.computer.moviesearch.api.Service;
+import com.example.computer.moviesearch.model.Movie;
 import com.example.computer.moviesearch.model.Trailer;
 import com.example.computer.moviesearch.model.TrailerResponse;
 
@@ -128,7 +129,7 @@ public class DetailActivity extends AppCompatActivity {
         int movie_id = getIntent().getExtras().getInt("id");
         try {
             if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please obtain your API key from themoviedb.ord", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please obtain your API key from themoviedb.org", Toast.LENGTH_SHORT).show();
                 return;
             }
             Client Client = new Client();
@@ -137,9 +138,13 @@ public class DetailActivity extends AppCompatActivity {
             call.enqueue(new Callback<TrailerResponse>() {
                 @Override
                 public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
-                    List<Trailer> trailer = response.body().getResults();
-                    recyclerView.setAdapter(new TrailerAdapter(getApplication(), trailer));
+                    List<Trailer> trailer = null;
+                    if (response.body() != null) {
+                        trailer = response.body().getResults();
+
+                    recyclerView.setAdapter(new TrailerAdapter(DetailActivity.this, trailer));
                     recyclerView.smoothScrollToPosition(0);
+                    } else return;
                 }
 
                 @Override

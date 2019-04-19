@@ -82,6 +82,8 @@
                     android:id="@+id/thumbnail_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layout_margin_left"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/plot_synopsis" />
 
@@ -89,6 +91,8 @@
                     android:id="@+id/trailer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layout_margin_left"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
                     android:text="@string/trailer"
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +105,8 @@
                     android:clipToPadding="false"
                     android:scrollbars="vertical"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/trailer" />
+                    app:layout_constraintTop_toBottomOf="@id/trailer"
+                    tools:listitem="@layout/trailer_card" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
