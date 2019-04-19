@@ -9,103 +9,101 @@
     tools:context="com.example.computer.moviesearch.DetailActivity"
     tools:showIn="@layout/activity_detail">
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
+        android:id="@+id/ad"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            tools:showIn="@layout/activity_detail">
 
-            <TextView
-                android:id="@+id/movie_title"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="10dp"
-                android:text="@string/name_movie"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layout_margin_left"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:layout_marginTop="@dimen/layout_margin_top"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_creator="1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_creator="1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Avengers" />
 
-            <TextView
-                android:id="@+id/plot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top2"
-                android:text="@string/plot"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/user_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layout_margin_left"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:layout_marginTop="@dimen/layout_margin_top"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_creator="1"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:text="7.2" />
 
-            <TextView
-                android:id="@+id/plot_synopsis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/release_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layout_margin_left"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:layout_marginTop="@dimen/layout_margin_top"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/user_rating"
+                    tools:text="2018/10/5" />
 
-            <TextView
-                android:id="@+id/rating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top2"
-                android:text="@string/rating"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/plot_synopsis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/layout_margin_left"
+                    android:layout_marginLeft="@dimen/layout_margin_left"
+                    android:layout_marginTop="@dimen/layout_margin_top"
+                    android:padding="@dimen/padding_layout"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/release_date"
+                    tools:text="In auctor lobortis lacus. Vivamus elementum semper nisi. In auctor lobortis lacus. Vivamus elementum semper nisi." />
 
-            <TextView
-                android:id="@+id/user_rating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/thumbnail_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/plot_synopsis" />
 
-            <TextView
-                android:id="@+id/release"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top2"
-                android:text="@string/release"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/trailer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trailer"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/plot_synopsis" />
 
-            <TextView
-                android:id="@+id/release_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/layout_margin_left"
-                android:layout_marginLeft="@dimen/layout_margin_left"
-                android:layout_marginTop="@dimen/layout_margin_top"
-                android:padding="@dimen/padding_layout"
-                android:textSize="20sp" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:scrollbars="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/trailer" />
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </RelativeLayout>
