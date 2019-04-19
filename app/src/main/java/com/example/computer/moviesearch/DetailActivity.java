@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.computer.moviesearch.adapter.TrailerAdapter;
 import com.example.computer.moviesearch.api.Client;
 import com.example.computer.moviesearch.api.Service;
 import com.example.computer.moviesearch.model.Trailer;
