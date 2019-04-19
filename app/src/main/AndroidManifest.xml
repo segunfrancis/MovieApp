@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/action_settings" />
+            android:label="@string/action_settings"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
