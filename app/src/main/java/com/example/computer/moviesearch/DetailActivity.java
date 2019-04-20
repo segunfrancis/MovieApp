@@ -23,7 +23,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.computer.moviesearch.adapter.TrailerAdapter;
 import com.example.computer.moviesearch.api.Client;
 import com.example.computer.moviesearch.api.Service;
-import com.example.computer.moviesearch.model.Movie;
 import com.example.computer.moviesearch.model.Trailer;
 import com.example.computer.moviesearch.model.TrailerResponse;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
@@ -86,7 +85,7 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "No API Data!", Toast.LENGTH_SHORT).show();
         }
 
-        MaterialFavoriteButton materialFavoriteButtonNice = findViewById(R.id.favorite_button);
+        final MaterialFavoriteButton materialFavoriteButtonNice = findViewById(R.id.favorite_button);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         materialFavoriteButtonNice.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
@@ -95,7 +94,7 @@ public class DetailActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
                     editor.putBoolean("Favorite Added", true);
                     editor.apply();
-                    saveFavorite();
+                    //saveFavorite();
                     Snackbar.make(buttonView, "Added to Favorite", Snackbar.LENGTH_SHORT).show();
                 } else {
                     SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();

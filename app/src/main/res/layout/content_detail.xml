@@ -100,13 +100,16 @@
 
                 <com.github.ivbaranov.mfb.MaterialFavoriteButton
                     android:id="@+id/favorite_button"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    app:layout_constraintEnd_toStartOf="@id/user_rating"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:tint="@color/colorPrimary"
                     app:layout_constraintBottom_toTopOf="@id/user_rating"
+                    app:layout_constraintEnd_toStartOf="@id/user_rating"
                     app:layout_constraintStart_toEndOf="@id/release_date"
                     app:layout_constraintTop_toBottomOf="@id/user_rating"
-                    android:background="@color/colorPrimary"/>
+                    app:mfb_animate_favorite="true"
+                    app:mfb_animate_unfavorite="true"
+                    app:mfb_rotation_duration="700"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view1"
