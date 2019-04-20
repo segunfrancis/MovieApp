@@ -49,6 +49,9 @@ public class Movie {
     @SerializedName("vote_average")
     private Double voteAverage;
 
+    public Movie() {
+    }
+
     public Movie(String posterPath, String adult, String overview, String releaseDate,
                  List<Integer> genreIds, Integer id, String originalTitle,
                  String originalLanguage, String title, String backdropPath,
