@@ -1,11 +1,14 @@
 package com.example.computer.moviesearch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +26,7 @@ import com.example.computer.moviesearch.api.Service;
 import com.example.computer.moviesearch.model.Movie;
 import com.example.computer.moviesearch.model.Trailer;
 import com.example.computer.moviesearch.model.TrailerResponse;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +85,27 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No API Data!", Toast.LENGTH_SHORT).show();
         }
+
+        MaterialFavoriteButton materialFavoriteButtonNice = findViewById(R.id.favorite_button);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        materialFavoriteButtonNice.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
+            @Override
+            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                if (favorite) {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
+                    editor.putBoolean("Favorite Added", true);
+                    editor.apply();
+                    saveFavorite();
+                    Snackbar.make(buttonView, "Added to Favorite", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
+                    editor.putBoolean("Favorite Removed", true);
+                    editor.apply();
+                    Snackbar.make(buttonView, "Removed from Favorite", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         initViews();
     }
 

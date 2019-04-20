@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/layout_margin_left"
                     android:layout_marginLeft="@dimen/layout_margin_left"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     app:layout_constraintTop_toBottomOf="@id/plot_synopsis" />
 
                 <TextView
@@ -97,6 +97,16 @@
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/plot_synopsis" />
+
+                <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                    android:id="@+id/favorite_button"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    app:layout_constraintEnd_toStartOf="@id/user_rating"
+                    app:layout_constraintBottom_toTopOf="@id/user_rating"
+                    app:layout_constraintStart_toEndOf="@id/release_date"
+                    app:layout_constraintTop_toBottomOf="@id/user_rating"
+                    android:background="@color/colorPrimary"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view1"
