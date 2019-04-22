@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView nameOfMovie, plotSynopsis, userRating, releaseDate;
+    TextView nameOfMovie, plotSynopsis, userRating, releaseDate, posterPath;
     ImageView imageView;
     private RecyclerView recyclerView;
     private TrailerAdapter adapter;
@@ -77,10 +77,12 @@ public class DetailActivity extends AppCompatActivity {
             String rating = getIntent().getExtras().getString("vote_average");
             String dateOfRelease = getIntent().getExtras().getString("release_date");
 
+            String poster = "https://image.tmdb.org/t/p/w500" + thumbnail;
+
             // Use glide to set up image
             RequestOptions options = new RequestOptions().fitCenter().placeholder(R.drawable.loading)
                     .error(R.drawable.error_image);
-            Glide.with(this).load(thumbnail).apply(options).into(imageView);
+            Glide.with(this).load(poster).apply(options).into(imageView);
 
             nameOfMovie.setText(movieName);
             plotSynopsis.setText(synopsis);
@@ -98,7 +100,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (favorite) {
                     SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
                     editor.putBoolean("Favorite Added", true);
-                    editor.apply();
+                    editor.commit();
                     saveFavorite();
                     Snackbar.make(buttonView, "Added to Favorite", Snackbar.LENGTH_SHORT).show();
                 } else {
@@ -108,7 +110,7 @@ public class DetailActivity extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
                     editor.putBoolean("Favorite Removed", true);
-                    editor.apply();
+                    editor.commit();
                     Snackbar.make(buttonView, "Removed from Favorite", Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -134,7 +136,6 @@ public class DetailActivity extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    /*TODO: change for scrolling effect*/
                     collapsingToolbarLayout.setTitle(getIntent().getStringExtra("title"));
                     isShown = true;
                 } else if (isShown) {
@@ -201,8 +202,8 @@ public class DetailActivity extends AppCompatActivity {
 
         favorite.setId(movie_id);
         favorite.setTitle(nameOfMovie.getText().toString().trim());
-        favorite.setPosterPath(poster);
         favorite.setVoteAverage(Double.parseDouble(rate));
+        favorite.setPosterPath(poster);
         favorite.setOverview(plotSynopsis.getText().toString().trim());
 
         favoriteDbHelper.addFavorite(favorite);

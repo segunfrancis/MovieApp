@@ -45,9 +45,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         Glide.with(context).load(movieList.get(position).getPosterPath())
                 .placeholder(R.drawable.placeholder_image).into(holder.thumbnail);*/
 
+       String poster = "https://image.tmdb.org/t/p/w500" + movieList.get(position).getPosterPath();
+
         RequestOptions options = new RequestOptions().fitCenter().placeholder(R.drawable.loading)
                 .error(R.drawable.error_image);
-        Glide.with(context).load(movieList.get(position).getPosterPath()).apply(options).into(holder.thumbnail);
+        Glide.with(context).load(poster).apply(options).into(holder.thumbnail);
     }
 
     @Override

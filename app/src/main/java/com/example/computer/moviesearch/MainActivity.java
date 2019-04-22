@@ -1,5 +1,6 @@
 package com.example.computer.moviesearch;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         favoriteDbHelper = new FavoriteDbHelper(activity);
 
         swipeContainer = findViewById(R.id.main_content);
-        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_green_light);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -98,45 +99,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
+
         checkSortOrder();
-    }
-
-    private void loadJSONPopular() {
-        // Execute on background thread
-        try {
-            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please obtain API key from themoviedb.org", Toast.LENGTH_LONG).show();
-                pd.dismiss();
-                return;
-            }
-            Client Client = new Client();
-            Service apiService = Client.getClient().create(Service.class);
-            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
-            call.enqueue(new Callback<MoviesResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
-                    // if call is successful
-                    List<Movie> movies = response.body().getResults();
-                    recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
-                    // 0 is the index of the first item on the list
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()) {
-                        swipeContainer.setRefreshing(false);
-                    }
-                    pd.dismiss();
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<MoviesResponse> call, @NonNull Throwable t) {
-                    // if call isn't successful
-                    //Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Error", e.getMessage());
-            Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void loadFavorite() {
@@ -160,12 +124,50 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         getAllFavorite();
     }
 
+    private void loadJSONPopular() {
+        // Execute on background thread
+        try {
+            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Please obtain API key from themoviedb.org", Toast.LENGTH_LONG).show();
+                //pd.dismiss();
+                return;
+            }
+            Client Client = new Client();
+            Service apiService = Client.getClient().create(Service.class);
+            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+            call.enqueue(new Callback<MoviesResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
+                    // if call is successful
+                    List<Movie> movies = response.body().getResults();
+                    recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
+                    // 0 is the index of the first item on the list
+                    recyclerView.smoothScrollToPosition(0);
+                    if (swipeContainer.isRefreshing()) {
+                        swipeContainer.setRefreshing(false);
+                    }
+                    //pd.dismiss();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<MoviesResponse> call, @NonNull Throwable t) {
+                    // if call isn't successful
+                    //Log.d("Error", t.getMessage());
+                    Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Log.d("Error", e.getMessage());
+            Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void loadJSONTopRated() {
         // Execute on background thread
         try {
             if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please obtain API key from themoviedb.org", Toast.LENGTH_LONG).show();
-                pd.dismiss();
+                //pd.dismiss();
                 return;
             }
             Client Client = new Client();
@@ -182,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     if (swipeContainer.isRefreshing()) {
                         swipeContainer.setRefreshing(false);
                     }
-                    pd.dismiss();
+                    //pd.dismiss();
                 }
 
                 @Override
@@ -197,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (movieList.isEmpty()) {
             checkSortOrder();
         } else {
-
+            checkSortOrder();
         }
     }
 
@@ -252,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void getAllFavorite() {
         new AsyncTask<Void, Void, Void>() {
             @Override
