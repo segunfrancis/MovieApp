@@ -11,10 +11,11 @@
     <string name="pref_sort_order_key">sortOrder</string>
     <string name="pref_most_popular">Most Popular</string>
     <string name="pref_highest_rated">Highest Rated</string>
+    <string name="trailer">Trailer</string>
+    <string name="favorite">Favorite Movie</string>
 
     <string name="search_hint">Search Movies or People</string>
     <string name="movies">Movies</string>
     <string name="people">People</string>
     <string name="search">Search!</string>
-    <string name="trailer">Trailer</string>
 </resources>

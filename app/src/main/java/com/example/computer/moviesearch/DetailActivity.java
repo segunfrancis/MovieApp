@@ -23,6 +23,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.computer.moviesearch.adapter.TrailerAdapter;
 import com.example.computer.moviesearch.api.Client;
 import com.example.computer.moviesearch.api.Service;
+import com.example.computer.moviesearch.data.FavoriteDbHelper;
+import com.example.computer.moviesearch.model.Movie;
 import com.example.computer.moviesearch.model.Trailer;
 import com.example.computer.moviesearch.model.TrailerResponse;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
@@ -41,6 +43,9 @@ public class DetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TrailerAdapter adapter;
     private List<Trailer> trailerList;
+    private FavoriteDbHelper favoriteDbHelper;
+    private Movie favorite;
+    private final AppCompatActivity activity = DetailActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,9 +99,13 @@ public class DetailActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
                     editor.putBoolean("Favorite Added", true);
                     editor.apply();
-                    //saveFavorite();
+                    saveFavorite();
                     Snackbar.make(buttonView, "Added to Favorite", Snackbar.LENGTH_SHORT).show();
                 } else {
+                    int movie_id = getIntent().getExtras().getInt("id");
+                    favoriteDbHelper = new FavoriteDbHelper(activity);
+                    favoriteDbHelper.deleteFavorite(movie_id);
+
                     SharedPreferences.Editor editor = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE).edit();
                     editor.putBoolean("Favorite Removed", true);
                     editor.apply();
@@ -181,5 +190,21 @@ public class DetailActivity extends AppCompatActivity {
             Log.d("Error", e.getMessage());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveFavorite() {
+        favoriteDbHelper = new FavoriteDbHelper(activity);
+        favorite = new Movie();
+        int movie_id = getIntent().getExtras().getInt("id");
+        String rate = getIntent().getExtras().getString("vote_average");
+        String poster = getIntent().getExtras().getString("poster_path");
+
+        favorite.setId(movie_id);
+        favorite.setTitle(nameOfMovie.getText().toString().trim());
+        favorite.setPosterPath(poster);
+        favorite.setVoteAverage(Double.parseDouble(rate));
+        favorite.setOverview(plotSynopsis.getText().toString().trim());
+
+        favoriteDbHelper.addFavorite(favorite);
     }
 }
