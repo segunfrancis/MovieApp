@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,9 +93,33 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "No API Data!", Toast.LENGTH_SHORT).show();
         }
 
+        initViews();
+
         materialFavoriteButtonNice = findViewById(R.id.favorite_button);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        materialFavoriteButtonNice.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
+        materialFavoriteButtonNice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!materialFavoriteButtonNice.isFavorite()) {
+                    materialFavoriteButtonNice.setFavorite(true);
+                    putBooleanInPreferences(materialFavoriteButtonNice.isFavorite(), "Favorite");
+
+                    saveFavorite();
+                    Snackbar.make(v, "Added to Favorite", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    materialFavoriteButtonNice.setFavorite(false);
+
+                    int movie_id = getIntent().getExtras().getInt("id");
+                    favoriteDbHelper = new FavoriteDbHelper(activity);
+                    favoriteDbHelper.deleteFavorite(movie_id);
+                    putBooleanInPreferences(materialFavoriteButtonNice.isFavorite(), "Favorite");
+                    /*editor.putBoolean("Favorite Removed", true);
+                    editor.commit();*/
+                    Snackbar.make(v, "Removed from Favorite", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+/*        materialFavoriteButtonNice.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                 if (favorite) {
@@ -116,8 +140,8 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+        */
 
-        initViews();
     }
 
     private void initCollapsingToolbar() {
@@ -148,13 +172,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        SharedPreferences preferences = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE);
-        boolean favoriteButtonChecked = preferences.getBoolean("Favorite Added", true);
-        boolean favoriteButtonUnchecked = preferences.getBoolean("Favorite Removed", false);
-
-
-
-        //materialFavoriteButtonNice.setFavorite(favoriteButtonChecked);
+        materialFavoriteButtonNice = findViewById(R.id.favorite_button);
+        materialFavoriteButtonNice.setFavorite(getBooleanFromPreferences("Favorite"));
 
         trailerList = new ArrayList<>();
         adapter = new TrailerAdapter(this, trailerList);
@@ -216,5 +235,18 @@ public class DetailActivity extends AppCompatActivity {
         favorite.setOverview(plotSynopsis.getText().toString().trim());
 
         favoriteDbHelper.addFavorite(favorite);
+    }
+
+    public void putBooleanInPreferences(boolean isChecked, String key) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.computer", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key, isChecked);
+        editor.apply();
+    }
+
+    public boolean getBooleanFromPreferences(String key) {
+        SharedPreferences preferences = getSharedPreferences("com.example.computer", MODE_PRIVATE);
+        boolean isChecked = preferences.getBoolean(key, false);
+        return isChecked;
     }
 }
