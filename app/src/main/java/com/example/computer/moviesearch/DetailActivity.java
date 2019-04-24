@@ -46,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
     private FavoriteDbHelper favoriteDbHelper;
     private Movie favorite;
     private final AppCompatActivity activity = DetailActivity.this;
+    private MaterialFavoriteButton materialFavoriteButtonNice;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +93,7 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "No API Data!", Toast.LENGTH_SHORT).show();
         }
 
-        final MaterialFavoriteButton materialFavoriteButtonNice = findViewById(R.id.favorite_button);
+        materialFavoriteButtonNice = findViewById(R.id.favorite_button);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         materialFavoriteButtonNice.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
@@ -147,6 +148,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        SharedPreferences preferences = getSharedPreferences("com.example.computer.moviesearch.DetailActivity", MODE_PRIVATE);
+        boolean favoriteButtonChecked = preferences.getBoolean("Favorite Added", true);
+        boolean favoriteButtonUnchecked = preferences.getBoolean("Favorite Removed", false);
+
+
+
+        //materialFavoriteButtonNice.setFavorite(favoriteButtonChecked);
+
         trailerList = new ArrayList<>();
         adapter = new TrailerAdapter(this, trailerList);
 
@@ -176,8 +185,8 @@ public class DetailActivity extends AppCompatActivity {
                     if (response.body() != null) {
                         trailer = response.body().getResults();
 
-                    recyclerView.setAdapter(new TrailerAdapter(DetailActivity.this, trailer));
-                    recyclerView.smoothScrollToPosition(0);
+                        recyclerView.setAdapter(new TrailerAdapter(DetailActivity.this, trailer));
+                        recyclerView.smoothScrollToPosition(0);
                     } else return;
                 }
 

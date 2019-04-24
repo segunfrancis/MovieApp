@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private AppCompatActivity activity = MainActivity.this;
     public static final String LOG_TAG = MoviesAdapter.class.getName();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
